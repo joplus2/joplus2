@@ -21,9 +21,8 @@ class relay:
     def on(self, rel):
         if (rel > self.num):
             raise ValueError("Relay number exceeded number of relays!")
-        if (rel <= 0):
-            raise ValueError("Relay number must be >0!")
-        rel = rel-1
+        if (rel < 0):
+            raise ValueError("Relay number must be positive!")
         state = self.iic.readfrom_mem(32,6,1)
         binary = int(list(state)[0])
         bits = binary & ~(1<<rel)
@@ -32,8 +31,8 @@ class relay:
     def off(self, rel):
         if (rel > self.num):
             raise ValueError("Relay number exceeded number of relays!")
-        if (rel <= 0):
-            raise ValueError("Relay number must be >0!")
+        if (rel < 0):
+            raise ValueError("Relay number must be positive!")
         rel = rel-1
         state = self.iic.readfrom_mem(32,6,1)
         binary = int(list(state)[0])
